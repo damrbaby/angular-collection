@@ -258,6 +258,14 @@ describe("collection", function() {
 
       expect(sortedTodos.last()).to.equal(c);
     });
+
+    it("should sort collection by given comparator after #remove", function(){
+      var sortedTodos = $collection.getInstance({comparator: "-label"});
+      sortedTodos.addAll([a, c, b]);
+      sortedTodos.remove(c);
+
+      expect(sortedTodos.last()).to.equal(a);
+    });
   });
 
   describe("#remove", function(){
@@ -282,6 +290,8 @@ describe("collection", function() {
       expect(otherTodos.length).to.equal(0);
       expect(otherTodos.get(a)).to.be.an('undefined');
       expect(otherTodos.get(b)).to.be.an('undefined');
+      expect(otherTodos.all()).to.eql([]);
+      expect(otherTodos.length).to.equal(0);
     });
   });
 
