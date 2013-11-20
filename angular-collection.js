@@ -167,10 +167,7 @@ angular.module('ngCollection', []).
       },
 
       removeAll: function() {
-        for (var i = this.array.length - 1; i >= 0; i--) {
-          this.remove(this.at(i));
-        }
-
+        this._reset();
         return this;
       },
 

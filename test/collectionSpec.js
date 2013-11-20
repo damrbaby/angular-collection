@@ -282,6 +282,8 @@ describe("collection", function() {
       expect(otherTodos.length).to.equal(0);
       expect(otherTodos.get(a)).to.be.an('undefined');
       expect(otherTodos.get(b)).to.be.an('undefined');
+      expect(otherTodos.all()).to.eql([]);
+      expect(otherTodos.length).to.equal(0);
     });
   });
 
