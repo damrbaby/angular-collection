@@ -155,14 +155,15 @@ angular.module('ngCollection', []).
       },
 
       remove: function(obj) {
-        var index;
-        index = this.array.indexOf(obj)
-        if (index === -1) {
-          return this
-        }
         delete this.hash[obj[this.idAttribute]];
-        this.array.splice(index, 1);
-        this.length--;
+
+        this.array = [];
+        for (var key in this.hash) {
+          this.array.push(this.hash[key]);
+        }
+
+        this.length = this.array.length;
+        this.sort();
         return this;
       },
 
