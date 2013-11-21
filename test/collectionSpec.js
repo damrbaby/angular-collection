@@ -266,6 +266,14 @@ describe("collection", function() {
 
       expect(sortedTodos.last()).to.equal(a);
     });
+
+    it("should sort collection by given comparator after #removeAll", function(){
+      var sortedTodos = $collection.getInstance({comparator: "-label"});
+      sortedTodos.addAll([a, c, b, d]);
+      sortedTodos.removeAll([c,b]);
+
+      expect(sortedTodos.last()).to.equal(a);
+    });
   });
 
   describe("#remove", function(){
@@ -285,9 +293,19 @@ describe("collection", function() {
   });
 
   describe("#removeAll", function(){
+    it("should remove multiple objects", function(){
+      otherTodos.add(c);
+      otherTodos.removeAll([a, b]);
+      expect(otherTodos.get(a)).to.be.an('undefined');
+      expect(otherTodos.get(b)).to.be.an('undefined');
+      expect(otherTodos.all()).to.eql([c]);
+      expect(otherTodos.length).to.equal(1);
+    });
+  });
+
+  describe("#reset", function(){
     it("should remove all objects", function(){
-      otherTodos.removeAll();
-      expect(otherTodos.length).to.equal(0);
+      otherTodos.reset();
       expect(otherTodos.get(a)).to.be.an('undefined');
       expect(otherTodos.get(b)).to.be.an('undefined');
       expect(otherTodos.all()).to.eql([]);
