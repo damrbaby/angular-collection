@@ -29,7 +29,7 @@ angular.module('ngCollection', []).
       if (options.comparator !== void 0) this.comparator = options.comparator;
       this.idAttribute = options.idAttribute || this.idAttribute;
       this.current = null;
-      this._reset();
+      this.reset();
       this.initialize.apply(this, arguments);
     }
 
@@ -155,19 +155,15 @@ angular.module('ngCollection', []).
 
       remove: function(obj) {
         delete this.hash[obj[this.idAttribute]];
-
-        this.array = [];
-        for (var key in this.hash) {
-          this.array.push(this.hash[key]);
-        }
-
-        this.length = this.array.length;
-        this.sort();
+        this._refresh();
         return this;
       },
 
-      removeAll: function() {
-        this._reset();
+      removeAll: function(objArr) {
+        for (var i = 0; i < objArr.length; i++) {
+          delete this.hash[objArr[i][this.idAttribute]];
+        }
+        this._refresh();
         return this;
       },
 
@@ -187,10 +183,21 @@ angular.module('ngCollection', []).
         return this.array;
       },
 
-      _reset: function() {
+      reset: function() {
         this.length = 0;
         this.hash  = {};
         this.array = [];
+      },
+
+      _refresh: function() {
+        this.array = [];
+        for (var key in this.hash) {
+          this.array.push(this.hash[key]);
+        }
+
+        this.length = this.array.length;
+        this.sort();
+        return this;
       }
     };
 
